@@ -1,29 +1,37 @@
  <h1><%= @cocktail.name %></h1>
-  <%= link_to "Back to all cocktails", root_path %>
+  <%= link_to "Retour aux cocktails", root_path %>
 
   <div class="row">
     <div class="col-sm-12 col-md-6">
-      <h3>Recipe</h3>
-      <table class="table table-bordered">
+      <h3>Recette</h3>
+      
         <tbody>
           <thead>
             <th>Ingredient</th>
             <th>Description</th>
             <th>Action</th>
           </thead>
+
           <% @cocktail.doses.each do |dose| %>
             <tr>
               <td><%= dose.ingredient.name %></td>
               <td><%= dose.description %></td>
               <td>
-                <%= link_to dose_path(dose), method: :delete, data: { confirm: "Are you sure?" } do %>
+                <%= link_to dose_path(dose), method: :delete, data: { confirm: "Vraiment, tu veux partir?" } do %>
                   <i class="fa fa-trash destroy_dose"></i>
                 <% end %>
               </td>
             </tr>
           <% end %>
         </tbody>
-      </table>
     </div>
   </div>
-  <%= cl_image_tag @article.photo.key, height: 300, width: 400, crop: :fill %>
+   
+  <% if @cocktail.photo.attached? %>
+  <%= cl_image_tag @cocktail.photo.key, height: 100, width: 200, crop: :fill %> 
+  <% else %>
+<%= cl_image_tag("sample",
+      height: 100, width: 200, crop: :fill) %>
+  <% end %>
+  
+  
